@@ -1,0 +1,289 @@
+@startuml vista_2_personajes_y_rasgos
+' =====================================================================
+'  Proyecto Final Informática II — Equipo #29
+'  "La espada de Bolívar" (South Park) — Diagrama de clases, CAPA LÓGICA
+'  (sin clases de interfaz gráfica: esas envolverán a estas en el Momento III)
+' =====================================================================
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+skinparam linetype polyline
+left to right direction
+skinparam nodesep 40
+skinparam ranksep 55
+skinparam defaultFontName "DejaVu Sans"
+skinparam defaultFontSize 11
+skinparam packageFontSize 13
+skinparam packageStyle rectangle
+skinparam ArrowColor #333333
+skinparam class {
+  BackgroundColor #FFFFFF
+  BorderColor #3A3A3A
+  HeaderBackgroundColor #F2F2F2
+  StereotypeFontSize 10
+}
+skinparam class<<Percepcion>> {
+  BackgroundColor #E3F2FD
+  BorderColor #1565C0
+}
+skinparam class<<Razonamiento>> {
+  BackgroundColor #EDE7F6
+  BorderColor #5E35B1
+}
+skinparam class<<Accion>> {
+  BackgroundColor #FFF3E0
+  BorderColor #E65100
+}
+skinparam class<<Aprendizaje>> {
+  BackgroundColor #E8F5E9
+  BorderColor #2E7D32
+}
+skinparam enum {
+  BackgroundColor #FAFAFA
+}
+
+title Vista 2 — Jerarquía de personajes y rasgos de personalidad
+package "Núcleo" #FAFAFA {
+  class Temporizador {
+    - duracion : double
+    - transcurrido : double
+    - pausado : bool
+    + actualizar(dt : double) : void
+    + tiempoRestante() : double
+    + haExpirado() : bool
+    + reiniciar(nuevaDuracion : double) : void
+  }
+  class EventoRuido <<struct>> {
+    + origen : Vector2D
+    + intensidad : double
+    + tipo : TipoRuido
+    + instante : double
+    + fuente : Entidad*
+  }
+}
+package "Personajes" #FFFDF5 {
+  abstract class Entidad {
+    # id : int
+    # posicion : Vector2D
+    # velocidad : Vector2D
+    # caja : Rectangulo
+    # activo : bool
+    + {abstract} actualizar(dt : double) : void
+    + colisionaCon(o : const Entidad&) : bool
+    + getPosicion() : Vector2D
+  }
+  abstract class Personaje {
+    # vida : int
+    # vidaMax : int
+    # masa : double
+    # velocidadBase : double
+    # estado : EstadoAnimacion
+    # mirandoDerecha : bool
+    # enSuelo : bool
+    + mover(dir : Vector2D, dt : double) : void
+    + recibirDanio(d : int) : void
+    + estaVivo() : bool
+  }
+  enum EstadoAnimacion {
+    IDLE
+    CAMINAR
+    CORRER
+    SALTAR
+    TREPAR
+    ATACAR
+    LANZAR
+    HERIDO
+    MUERTO
+  }
+  abstract class Jugador {
+    # ruidoBase : double
+    # agachado : bool
+    # enEscalera : bool
+    # inventario : std::map<TipoItem, int>
+    # rasgos : std::vector<RasgoPersonalidad*>
+    # salto : MovimientoParabolico
+    # planeo : CaidaConArrastre
+    + lanzarObjeto(dir : Vector2D, fuerza : double) : ProyectilParabolico*
+    + emitirRuido() : EventoRuido
+    + recoger(item : Item&) : void
+    + saltar() : void
+    + trepar(dy : double) : void
+    + multiplicadorVelocidad() : double
+    + {abstract} usarHabilidad() : void
+  }
+  class Cartman {
+    - rabia : double
+    + comer(p : Item&) : void
+    + hacerBerrinche() : void
+    + usarHabilidad() : void
+  }
+  class Butters {
+    - nervios : double
+    - temblor : OsciladorAmortiguado
+    + ponerseNervioso(distEnemigo : double) : void
+    + activarAlterEgo() : void
+    + usarHabilidad() : void
+  }
+  enum TipoPersonaje {
+    CARTMAN
+    BUTTERS
+  }
+  abstract class Enemigo {
+    # danio : int
+    # rangoAtaque : double
+    # objetivo : Jugador*
+    + {abstract} atacar() : void
+  }
+  class Policia {
+    - agente : AgenteInteligente*
+    - rutaPatrulla : std::vector<Vector2D>
+    - indiceRuta : int
+    - direccionVista : double
+    + patrullar(dt : double) : void
+    + irHacia(p : Vector2D, dt : double) : void
+    + mirarHacia(p : Vector2D) : void
+    + capturar() : void
+    + atacar() : void
+  }
+  class Soldado {
+    # cadencia : double
+    # recarga : Temporizador
+    # latasGas : int
+    + disparar() : Proyectil*
+    + lanzarGas(objetivo : Vector2D) : ProyectilParabolico*
+    + atacar() : void
+  }
+  class Comandante {
+    - fase : int
+    - refuerzos : Temporizador
+    - errorPunteria : double
+    + lanzarGranada(objetivo : Vector2D) : ProyectilParabolico*
+    + llamarRefuerzos() : std::vector<Soldado*>
+    + cambiarFase() : void
+    + atacar() : void
+  }
+}
+package "Rasgos de personalidad" #FFF8F0 {
+  abstract class RasgoPersonalidad {
+    # nombre : std::string
+    # duracion : Temporizador
+    # activo : bool
+    + activar(j : Jugador&) : void
+    + actualizar(dt : double, j : Jugador&) : void
+    + {abstract} aplicar(j : Jugador&) : void
+    + {abstract} revertir(j : Jugador&) : void
+  }
+  class RasgoGloton {
+    - bonusFuerza : double = 2.0
+    - penalizacionVel : double = 0.7
+    - multRuido : double = 1.5
+    + aplicar(j : Jugador&) : void
+    + revertir(j : Jugador&) : void
+  }
+  class RasgoBerrinchudo {
+    - umbralRabia : double = 100
+    - bonusVel : double = 1.25
+    - muReducido : double
+    + aplicar(j : Jugador&) : void
+    + revertir(j : Jugador&) : void
+  }
+  class RasgoMiedoso {
+    - radioPanico : double
+    - amplitudTemblor : double
+    + aplicar(j : Jugador&) : void
+    + revertir(j : Jugador&) : void
+  }
+  class RasgoAlterEgo {
+    - bonusAlcance : double = 1.5
+    - tiempoAturdir : double
+    + aplicar(j : Jugador&) : void
+    + revertir(j : Jugador&) : void
+  }
+}
+package "Física (modelos parametrizables)" #F5FBFF {
+  abstract class ModeloFisico {
+    # t : double
+    # g : double = 9.8
+    + {abstract} paso(e : EstadoFisico&, dt : double) : void
+    + reiniciar() : void
+  }
+  class MovimientoParabolico {
+    - coefRestitucion : double
+    + paso(e : EstadoFisico&, dt : double) : void
+    + rebotar(e : EstadoFisico&) : void
+    + {static} velocidadParaImpacto(o : Vector2D, d : Vector2D, ang : double, g : double) : Vector2D
+  }
+  class OsciladorAmortiguado {
+    # amplitud0 : double
+    # gamma : double
+    # omega0 : double
+    + desplazamiento(t : double) : double
+    + omegaAmortiguada() : double
+    + perturbar(impulso : double) : void
+    + paso(e : EstadoFisico&, dt : double) : void
+  }
+  class CaidaConArrastre {
+    - b : double
+    - masa : double
+    + velocidadTerminal() : double
+    + paso(e : EstadoFisico&, dt : double) : void
+  }
+}
+package "Entorno y objetos" #FBF7FF {
+  class Proyectil {
+    # danio : int
+    # duenio : Entidad*
+    + alImpactar() : void
+  }
+  class ProyectilParabolico {
+    - fisica : MovimientoParabolico
+    - estado : EstadoFisico
+    - radioEfecto : double
+    - tipo : TipoProyectil
+    + alImpactar() : void
+    + generarRuido() : EventoRuido
+  }
+}
+package "Agente inteligente (Policía guardia)" #EEF4FF {
+  class AgenteInteligente {
+    - cuerpo : Policia*
+    - percepcion : ModuloPercepcion
+    - razonamiento : ModuloRazonamiento
+    - accion : ModuloAccion
+    - aprendizaje : ModuloAprendizaje
+    - estado : EstadoAgente
+    - ultimaDecision : Decision
+    + ciclo(j : const Jugador&, bus : BusEventos&, dt : double) : void
+    + getEstado() : EstadoAgente
+  }
+}
+Entidad <|-- Personaje
+Personaje <|-- Jugador
+Jugador <|-- Cartman
+Jugador <|-- Butters
+Personaje <|-- Enemigo
+Enemigo <|-- Policia
+Enemigo <|-- Soldado
+Soldado <|-- Comandante
+Proyectil <|-- ProyectilParabolico
+ModeloFisico <|-- MovimientoParabolico
+ModeloFisico <|-- OsciladorAmortiguado
+ModeloFisico <|-- CaidaConArrastre
+RasgoPersonalidad <|-- RasgoGloton
+RasgoPersonalidad <|-- RasgoBerrinchudo
+RasgoPersonalidad <|-- RasgoMiedoso
+RasgoPersonalidad <|-- RasgoAlterEgo
+Jugador "1" *-- "2..*" RasgoPersonalidad
+Jugador *-- MovimientoParabolico : salto
+Jugador *-- CaidaConArrastre : planeo
+Butters *-- OsciladorAmortiguado : temblor
+Enemigo --> "1" Jugador : objetivo
+ProyectilParabolico *-- MovimientoParabolico
+Policia "1" *-- "1" AgenteInteligente
+Jugador ..> ProyectilParabolico : <<crea>>
+Jugador ..> EventoRuido : <<emite>>
+Soldado ..> Proyectil : <<crea>>
+Soldado ..> ProyectilParabolico : <<crea>>
+Comandante ..> MovimientoParabolico : velocidadParaImpacto()
+ProyectilParabolico ..> EventoRuido : <<emite>>
+Personaje --> EstadoAnimacion
+@enduml

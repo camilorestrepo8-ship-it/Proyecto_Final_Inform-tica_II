@@ -1,0 +1,284 @@
+@startuml vista_4_niveles_y_nucleo
+' =====================================================================
+'  Proyecto Final Informática II — Equipo #29
+'  "La espada de Bolívar" (South Park) — Diagrama de clases, CAPA LÓGICA
+'  (sin clases de interfaz gráfica: esas envolverán a estas en el Momento III)
+' =====================================================================
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+skinparam linetype polyline
+left to right direction
+skinparam nodesep 40
+skinparam ranksep 55
+skinparam defaultFontName "DejaVu Sans"
+skinparam defaultFontSize 11
+skinparam packageFontSize 13
+skinparam packageStyle rectangle
+skinparam ArrowColor #333333
+skinparam class {
+  BackgroundColor #FFFFFF
+  BorderColor #3A3A3A
+  HeaderBackgroundColor #F2F2F2
+  StereotypeFontSize 10
+}
+skinparam class<<Percepcion>> {
+  BackgroundColor #E3F2FD
+  BorderColor #1565C0
+}
+skinparam class<<Razonamiento>> {
+  BackgroundColor #EDE7F6
+  BorderColor #5E35B1
+}
+skinparam class<<Accion>> {
+  BackgroundColor #FFF3E0
+  BorderColor #E65100
+}
+skinparam class<<Aprendizaje>> {
+  BackgroundColor #E8F5E9
+  BorderColor #2E7D32
+}
+skinparam enum {
+  BackgroundColor #FAFAFA
+}
+
+title Vista 4 — Niveles, núcleo del juego y eventos
+package "Núcleo" #FAFAFA {
+  class Vector2D <<struct>> {
+    + x : double
+    + y : double
+    + operator+(o : const Vector2D&) : Vector2D
+    + operator-(o : const Vector2D&) : Vector2D
+    + operator*(k : double) : Vector2D
+    + magnitud() : double
+    + normalizado() : Vector2D
+    + distancia(o : const Vector2D&) : double
+  }
+  class Rectangulo <<struct>> {
+    + x, y, ancho, alto : double
+    + intersecta(o : const Rectangulo&) : bool
+    + contiene(p : const Vector2D&) : bool
+  }
+  class Temporizador {
+    - duracion : double
+    - transcurrido : double
+    - pausado : bool
+    + actualizar(dt : double) : void
+    + tiempoRestante() : double
+    + haExpirado() : bool
+    + reiniciar(nuevaDuracion : double) : void
+  }
+  class Camara {
+    - posicion : Vector2D
+    - limites : Rectangulo
+    - modo : ModoVista
+    - salaActual : std::pair<int,int>
+    + seguir(objetivo : const Entidad&) : void
+    + cambiarSala(fila : int, col : int) : void
+    + aplicarLimites() : void
+  }
+  enum ModoVista {
+    SALA_FIJA
+    SCROLL_HORIZONTAL
+  }
+  class GestorJuego {
+    - niveles : std::vector<Nivel*>
+    - indiceNivel : int
+    - estado : EstadoJuego
+    - personajeElegido : TipoPersonaje
+    - puntaje : int
+    - memoriaGuardias : MemoriaAgente*
+    + seleccionarPersonaje(t : TipoPersonaje) : void
+    + iniciarNivel(i : int) : void
+    + actualizar(dt : double) : void
+    + siguienteNivel() : void
+    + reiniciarDesdeCheckpoint() : void
+  }
+  enum EstadoJuego {
+    MENU
+    SELECCION
+    JUGANDO
+    PAUSA
+    DERROTA
+    VICTORIA
+  }
+  class BusEventos {
+    - cola : std::queue<EventoRuido>
+    + publicar(e : const EventoRuido&) : void
+    + consumirCerca(p : Vector2D, radio : double) : std::vector<EventoRuido>
+    + limpiar() : void
+  }
+  class EventoRuido <<struct>> {
+    + origen : Vector2D
+    + intensidad : double
+    + tipo : TipoRuido
+    + instante : double
+    + fuente : Entidad*
+  }
+  enum TipoRuido {
+    PASOS
+    OBJETO_LANZADO
+    VIDRIO_ROTO
+    CAIDA
+    GRITO
+  }
+}
+package "Personajes" #FFFDF5 {
+  abstract class Jugador {
+    # ruidoBase : double
+    # agachado : bool
+    # enEscalera : bool
+    # inventario : std::map<TipoItem, int>
+    # rasgos : std::vector<RasgoPersonalidad*>
+    # salto : MovimientoParabolico
+    # planeo : CaidaConArrastre
+    + lanzarObjeto(dir : Vector2D, fuerza : double) : ProyectilParabolico*
+    + emitirRuido() : EventoRuido
+    + recoger(item : Item&) : void
+    + saltar() : void
+    + trepar(dy : double) : void
+    + multiplicadorVelocidad() : double
+    + {abstract} usarHabilidad() : void
+  }
+  enum TipoPersonaje {
+    CARTMAN
+    BUTTERS
+  }
+  abstract class Enemigo {
+    # danio : int
+    # rangoAtaque : double
+    # objetivo : Jugador*
+    + {abstract} atacar() : void
+  }
+  class Comandante {
+    - fase : int
+    - refuerzos : Temporizador
+    - errorPunteria : double
+    + lanzarGranada(objetivo : Vector2D) : ProyectilParabolico*
+    + llamarRefuerzos() : std::vector<Soldado*>
+    + cambiarFase() : void
+    + atacar() : void
+  }
+}
+package "Entorno y objetos" #FBF7FF {
+  abstract class ObjetoJuego {
+    # interactuable : bool
+    + {abstract} alInteractuar(j : Jugador&) : void
+  }
+}
+package "Niveles" #F7FFF7 {
+  abstract class Nivel {
+    # numero : int
+    # jugador : Jugador*
+    # enemigos : std::list<Enemigo*>
+    # objetos : std::vector<ObjetoJuego*>
+    # proyectiles : std::list<Proyectil*>
+    # reloj : Temporizador
+    # camara : Camara
+    # bus : BusEventos
+    + {abstract} inicializar() : void
+    + actualizar(dt : double) : void
+    + {abstract} verificarVictoria() : bool
+    + {abstract} verificarDerrota() : bool
+    # resolverColisiones() : void
+  }
+  class NivelInfiltracion {
+    - mapa : MapaCuadricula
+    - vitrina : Vitrina*
+    - nivelAlerta : int
+    - alarma : Temporizador
+    - espadaObtenida : bool
+    + inicializar() : void
+    + verificarCambioSala() : void
+    + dispararAlarma() : void
+    + verificarVictoria() : bool
+    + verificarDerrota() : bool
+  }
+  class NivelHuida {
+    - distanciaRecorrida : double
+    - distanciaMeta : double
+    - tramos : std::deque<Tramo>
+    - frenteSoldados : double
+    - comandante : Comandante*
+    - capas : std::vector<CapaParallax>
+    + inicializar() : void
+    + generarTramo() : void
+    + actualizarParallax(camX : double) : void
+    + verificarVictoria() : bool
+    + verificarDerrota() : bool
+  }
+  class Tramo <<struct>> {
+    + inicioX : double
+    + plantilla : int
+    + colisiones : std::vector<Colision>
+    + numToldos : int
+    + numSoldados : int
+  }
+  class CapaParallax <<struct>> {
+    + imagen : std::string
+    + factor : double
+    + desplazamiento : double
+  }
+  class Colision <<struct>> {
+    + caja : Rectangulo
+    + tipo : TipoTile
+  }
+  enum TipoTile {
+    VACIO
+    SOLIDO
+    PLATAFORMA
+    ESCALERA
+    ENCERADO
+    AGUA
+  }
+  class MapaCuadricula {
+    - celdas : std::vector<std::vector<Celda>>
+    - tamCelda : int = 40
+    + cargar(rutaJson : const std::string&) : void
+    + tipoEn(f : int, c : int) : TipoTile
+    + esTransitable(f : int, c : int) : bool
+    + buscarRuta(o : Vector2D, d : Vector2D) : std::vector<Vector2D>
+    + lineaDeVision(a : Vector2D, b : Vector2D) : bool
+    + aCelda(p : Vector2D) : std::pair<int,int>
+  }
+  class Celda <<struct>> {
+    + fila : int
+    + col : int
+    + tipo : TipoTile
+    + oscura : bool
+  }
+}
+package "Agente inteligente (Policía guardia)" #EEF4FF {
+  class MemoriaAgente <<compartida>> {
+    - mapaCalor : std::map<std::pair<int,int>, double>
+    - pDistraccion : double
+    - historial : std::deque<Interaccion>
+    - ultimaPosJugador : Vector2D
+    - {static} MAX_HISTORIAL : const int = 50
+  }
+}
+Nivel <|-- NivelInfiltracion
+Nivel <|-- NivelHuida
+GestorJuego "1" *-- "2..*" Nivel
+GestorJuego "1" o-- "1" MemoriaAgente : persiste entre intentos
+Nivel "1" *-- "1" Temporizador
+Nivel "1" *-- "1" Camara
+Nivel "1" *-- "1" BusEventos
+Nivel "1" o-- "1" Jugador
+Nivel "1" o-- "*" Enemigo
+Nivel "1" *-- "*" ObjetoJuego
+NivelInfiltracion "1" *-- "1" MapaCuadricula
+MapaCuadricula "1" *-- "*" Celda
+NivelHuida "1" *-- "*" Tramo
+NivelHuida "1" *-- "3..*" CapaParallax
+Tramo "1" *-- "*" Colision
+Colision --> TipoTile
+Celda --> TipoTile
+NivelHuida "1" --> "1" Comandante : jefe final
+BusEventos "1" o-- "*" EventoRuido
+Enemigo --> "1" Jugador : objetivo
+Jugador ..> EventoRuido : <<emite>>
+GestorJuego --> EstadoJuego
+GestorJuego --> TipoPersonaje
+Camara --> ModoVista
+EventoRuido --> TipoRuido
+@enduml

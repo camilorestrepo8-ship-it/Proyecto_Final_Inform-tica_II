@@ -1,0 +1,220 @@
+@startuml vista_3_fisica_y_entorno
+' =====================================================================
+'  Proyecto Final Informática II — Equipo #29
+'  "La espada de Bolívar" (South Park) — Diagrama de clases, CAPA LÓGICA
+'  (sin clases de interfaz gráfica: esas envolverán a estas en el Momento III)
+' =====================================================================
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+skinparam linetype polyline
+left to right direction
+skinparam nodesep 40
+skinparam ranksep 55
+skinparam defaultFontName "DejaVu Sans"
+skinparam defaultFontSize 11
+skinparam packageFontSize 13
+skinparam packageStyle rectangle
+skinparam ArrowColor #333333
+skinparam class {
+  BackgroundColor #FFFFFF
+  BorderColor #3A3A3A
+  HeaderBackgroundColor #F2F2F2
+  StereotypeFontSize 10
+}
+skinparam class<<Percepcion>> {
+  BackgroundColor #E3F2FD
+  BorderColor #1565C0
+}
+skinparam class<<Razonamiento>> {
+  BackgroundColor #EDE7F6
+  BorderColor #5E35B1
+}
+skinparam class<<Accion>> {
+  BackgroundColor #FFF3E0
+  BorderColor #E65100
+}
+skinparam class<<Aprendizaje>> {
+  BackgroundColor #E8F5E9
+  BorderColor #2E7D32
+}
+skinparam enum {
+  BackgroundColor #FAFAFA
+}
+
+title Vista 3 — Modelos físicos y objetos del entorno
+package "Núcleo" #FAFAFA {
+  class EventoRuido <<struct>> {
+    + origen : Vector2D
+    + intensidad : double
+    + tipo : TipoRuido
+    + instante : double
+    + fuente : Entidad*
+  }
+}
+package "Personajes" #FFFDF5 {
+  abstract class Entidad {
+    # id : int
+    # posicion : Vector2D
+    # velocidad : Vector2D
+    # caja : Rectangulo
+    # activo : bool
+    + {abstract} actualizar(dt : double) : void
+    + colisionaCon(o : const Entidad&) : bool
+    + getPosicion() : Vector2D
+  }
+}
+package "Física (modelos parametrizables)" #F5FBFF {
+  abstract class ModeloFisico {
+    # t : double
+    # g : double = 9.8
+    + {abstract} paso(e : EstadoFisico&, dt : double) : void
+    + reiniciar() : void
+  }
+  class EstadoFisico <<struct>> {
+    + pos : Vector2D
+    + vel : Vector2D
+    + enSuelo : bool
+  }
+  class MovimientoParabolico {
+    - coefRestitucion : double
+    + paso(e : EstadoFisico&, dt : double) : void
+    + rebotar(e : EstadoFisico&) : void
+    + {static} velocidadParaImpacto(o : Vector2D, d : Vector2D, ang : double, g : double) : Vector2D
+  }
+  class OsciladorAmortiguado {
+    # amplitud0 : double
+    # gamma : double
+    # omega0 : double
+    + desplazamiento(t : double) : double
+    + omegaAmortiguada() : double
+    + perturbar(impulso : double) : void
+    + paso(e : EstadoFisico&, dt : double) : void
+  }
+  class PenduloAmortiguado {
+    - longitud : double
+    + anguloEn(t : double) : double
+    + posicionExtremo(pivote : Vector2D, t : double) : Vector2D
+  }
+  class MovimientoCircular {
+    - centro : Vector2D
+    - radio : double
+    - omega : double
+    - alfa : double
+    + anguloEn(t : double) : double
+    + acelerar(alfa : double) : void
+    + paso(e : EstadoFisico&, dt : double) : void
+  }
+  class FriccionCinetica {
+    - mu : double
+    + paso(e : EstadoFisico&, dt : double) : void
+  }
+  class MasaResorte {
+    - k : double
+    - b : double
+    - masa : double
+    - elongacion : double
+    - velY : double
+    + fuerza() : double
+    + velocidadSalida() : double
+    + paso(e : EstadoFisico&, dt : double) : void
+  }
+  class CaidaConArrastre {
+    - b : double
+    - masa : double
+    + velocidadTerminal() : double
+    + paso(e : EstadoFisico&, dt : double) : void
+  }
+}
+package "Entorno y objetos" #FBF7FF {
+  abstract class ObjetoJuego {
+    # interactuable : bool
+    + {abstract} alInteractuar(j : Jugador&) : void
+  }
+  class Proyectil {
+    # danio : int
+    # duenio : Entidad*
+    + alImpactar() : void
+  }
+  class ProyectilParabolico {
+    - fisica : MovimientoParabolico
+    - estado : EstadoFisico
+    - radioEfecto : double
+    - tipo : TipoProyectil
+    + alImpactar() : void
+    + generarRuido() : EventoRuido
+  }
+  enum TipoProyectil {
+    PIEDRA
+    LATA_GAS
+    GRANADA
+  }
+  class Candelabro {
+    - pendulo : PenduloAmortiguado
+    - radioLuz : double
+    + iluminaA(p : Vector2D) : bool
+  }
+  class Reflector {
+    - giro : MovimientoCircular
+    - alcance : double
+    - apertura : double
+    + iluminaA(p : Vector2D) : bool
+  }
+  class PisoEncerado {
+    - friccion : FriccionCinetica
+    - zona : Rectangulo
+  }
+  class Toldo {
+    - resorte : MasaResorte
+    + impulsar(j : Jugador&) : void
+  }
+  class Vitrina {
+    - resistencia : int
+    - rota : bool
+    + golpear(fuerza : double) : EventoRuido
+  }
+  class Item {
+    - tipo : TipoItem
+    + alInteractuar(j : Jugador&) : void
+  }
+  enum TipoItem {
+    PASABOCAS
+    CAPA_ALUMINIO
+    PARAGUAS
+    LLAVE
+    PIEDRA
+    ESPADA
+  }
+  class Escondite {
+    - ocupado : bool
+    + alInteractuar(j : Jugador&) : void
+  }
+}
+Entidad <|-- ObjetoJuego
+ObjetoJuego <|-- Proyectil
+Proyectil <|-- ProyectilParabolico
+ObjetoJuego <|-- Candelabro
+ObjetoJuego <|-- Reflector
+ObjetoJuego <|-- PisoEncerado
+ObjetoJuego <|-- Toldo
+ObjetoJuego <|-- Vitrina
+ObjetoJuego <|-- Item
+ObjetoJuego <|-- Escondite
+ModeloFisico <|-- MovimientoParabolico
+ModeloFisico <|-- OsciladorAmortiguado
+OsciladorAmortiguado <|-- PenduloAmortiguado
+ModeloFisico <|-- MovimientoCircular
+ModeloFisico <|-- FriccionCinetica
+ModeloFisico <|-- MasaResorte
+ModeloFisico <|-- CaidaConArrastre
+Candelabro *-- PenduloAmortiguado
+Reflector *-- MovimientoCircular
+PisoEncerado *-- FriccionCinetica
+Toldo *-- MasaResorte
+ProyectilParabolico *-- MovimientoParabolico
+ProyectilParabolico *-- EstadoFisico
+ModeloFisico ..> EstadoFisico : actualiza
+Vitrina ..> EventoRuido : <<emite>>
+ProyectilParabolico ..> EventoRuido : <<emite>>
+ProyectilParabolico --> TipoProyectil
+Item --> TipoItem
+@enduml

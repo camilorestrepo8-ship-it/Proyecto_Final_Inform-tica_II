@@ -1,0 +1,282 @@
+@startuml vista_1_agente_inteligente
+' =====================================================================
+'  Proyecto Final Informática II — Equipo #29
+'  "La espada de Bolívar" (South Park) — Diagrama de clases, CAPA LÓGICA
+'  (sin clases de interfaz gráfica: esas envolverán a estas en el Momento III)
+' =====================================================================
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+skinparam linetype polyline
+left to right direction
+skinparam nodesep 40
+skinparam ranksep 55
+skinparam defaultFontName "DejaVu Sans"
+skinparam defaultFontSize 11
+skinparam packageFontSize 13
+skinparam packageStyle rectangle
+skinparam ArrowColor #333333
+skinparam class {
+  BackgroundColor #FFFFFF
+  BorderColor #3A3A3A
+  HeaderBackgroundColor #F2F2F2
+  StereotypeFontSize 10
+}
+skinparam class<<Percepcion>> {
+  BackgroundColor #E3F2FD
+  BorderColor #1565C0
+}
+skinparam class<<Razonamiento>> {
+  BackgroundColor #EDE7F6
+  BorderColor #5E35B1
+}
+skinparam class<<Accion>> {
+  BackgroundColor #FFF3E0
+  BorderColor #E65100
+}
+skinparam class<<Aprendizaje>> {
+  BackgroundColor #E8F5E9
+  BorderColor #2E7D32
+}
+skinparam enum {
+  BackgroundColor #FAFAFA
+}
+
+title Vista 1 — Arquitectura del agente inteligente (Policía guardia)
+package "Núcleo" #FAFAFA {
+  class GestorJuego {
+    - niveles : std::vector<Nivel*>
+    - indiceNivel : int
+    - estado : EstadoJuego
+    - personajeElegido : TipoPersonaje
+    - puntaje : int
+    - memoriaGuardias : MemoriaAgente*
+    + seleccionarPersonaje(t : TipoPersonaje) : void
+    + iniciarNivel(i : int) : void
+    + actualizar(dt : double) : void
+    + siguienteNivel() : void
+    + reiniciarDesdeCheckpoint() : void
+  }
+  class BusEventos {
+    - cola : std::queue<EventoRuido>
+    + publicar(e : const EventoRuido&) : void
+    + consumirCerca(p : Vector2D, radio : double) : std::vector<EventoRuido>
+    + limpiar() : void
+  }
+  class EventoRuido <<struct>> {
+    + origen : Vector2D
+    + intensidad : double
+    + tipo : TipoRuido
+    + instante : double
+    + fuente : Entidad*
+  }
+  enum TipoRuido {
+    PASOS
+    OBJETO_LANZADO
+    VIDRIO_ROTO
+    CAIDA
+    GRITO
+  }
+}
+package "Personajes" #FFFDF5 {
+  abstract class Jugador {
+    # ruidoBase : double
+    # agachado : bool
+    # enEscalera : bool
+    # inventario : std::map<TipoItem, int>
+    # rasgos : std::vector<RasgoPersonalidad*>
+    # salto : MovimientoParabolico
+    # planeo : CaidaConArrastre
+    + lanzarObjeto(dir : Vector2D, fuerza : double) : ProyectilParabolico*
+    + emitirRuido() : EventoRuido
+    + recoger(item : Item&) : void
+    + saltar() : void
+    + trepar(dy : double) : void
+    + multiplicadorVelocidad() : double
+    + {abstract} usarHabilidad() : void
+  }
+  abstract class Enemigo {
+    # danio : int
+    # rangoAtaque : double
+    # objetivo : Jugador*
+    + {abstract} atacar() : void
+  }
+  class Policia {
+    - agente : AgenteInteligente*
+    - rutaPatrulla : std::vector<Vector2D>
+    - indiceRuta : int
+    - direccionVista : double
+    + patrullar(dt : double) : void
+    + irHacia(p : Vector2D, dt : double) : void
+    + mirarHacia(p : Vector2D) : void
+    + capturar() : void
+    + atacar() : void
+  }
+}
+package "Niveles" #F7FFF7 {
+  enum TipoTile {
+    VACIO
+    SOLIDO
+    PLATAFORMA
+    ESCALERA
+    ENCERADO
+    AGUA
+  }
+  class MapaCuadricula {
+    - celdas : std::vector<std::vector<Celda>>
+    - tamCelda : int = 40
+    + cargar(rutaJson : const std::string&) : void
+    + tipoEn(f : int, c : int) : TipoTile
+    + esTransitable(f : int, c : int) : bool
+    + buscarRuta(o : Vector2D, d : Vector2D) : std::vector<Vector2D>
+    + lineaDeVision(a : Vector2D, b : Vector2D) : bool
+    + aCelda(p : Vector2D) : std::pair<int,int>
+  }
+  class Celda <<struct>> {
+    + fila : int
+    + col : int
+    + tipo : TipoTile
+    + oscura : bool
+  }
+}
+package "Agente inteligente (Policía guardia)" #EEF4FF {
+  class AgenteInteligente {
+    - cuerpo : Policia*
+    - percepcion : ModuloPercepcion
+    - razonamiento : ModuloRazonamiento
+    - accion : ModuloAccion
+    - aprendizaje : ModuloAprendizaje
+    - estado : EstadoAgente
+    - ultimaDecision : Decision
+    + ciclo(j : const Jugador&, bus : BusEventos&, dt : double) : void
+    + getEstado() : EstadoAgente
+  }
+  enum EstadoAgente {
+    PATRULLAR
+    INVESTIGAR
+    PERSEGUIR
+    BUSCAR
+    ALERTA
+    CAPTURA
+  }
+  class ModuloPercepcion <<Percepcion>> {
+    - anguloVision : double
+    - alcanceVision : double
+    - umbralAuditivo : double
+    - mapa : const MapaCuadricula*
+    + percibir(j : const Jugador&, bus : BusEventos&, luz : double) : std::vector<Estimulo>
+    - verJugador(j : const Jugador&, luz : double) : bool
+    - oirRuido(e : const EventoRuido&) : bool
+  }
+  class Estimulo <<struct>> {
+    + tipo : TipoEstimulo
+    + posicion : Vector2D
+    + intensidad : double
+    + confianza : double
+    + instante : double
+  }
+  enum TipoEstimulo {
+    VISUAL
+    AUDITIVO
+    AVISO_COMPANERO
+  }
+  class ModuloRazonamiento <<Razonamiento>> {
+    - sospecha : double
+    - umbralInvestigar : double
+    - umbralPerseguir : double
+    + interpretar(e : const Estimulo&, a : const ModuloAprendizaje&) : Intencion
+    + decidir(es : const std::vector<Estimulo>&, a : const ModuloAprendizaje&) : Decision
+    - utilidad(t : TipoAccion, e : const Estimulo&) : double
+  }
+  enum Intencion {
+    INTRUSO_CONFIRMADO
+    POSIBLE_INTRUSO
+    POSIBLE_DISTRACCION
+    NADA
+  }
+  class Decision <<struct>> {
+    + accion : TipoAccion
+    + destino : Vector2D
+    + prioridad : double
+    + intencion : Intencion
+  }
+  enum TipoAccion {
+    PATRULLAR
+    IR_A
+    MIRAR_HACIA
+    PERSEGUIR
+    BUSCAR_ZONA
+    DAR_ALARMA
+    CAPTURAR
+  }
+  class ModuloAccion <<Accion>> {
+    - ruta : std::queue<Vector2D>
+    - velPatrulla : double
+    - velPersecucion : double
+    + ejecutar(d : const Decision&, p : Policia&, m : const MapaCuadricula&, dt : double) : ResultadoAccion
+    - seguirRuta(p : Policia&, dt : double) : void
+  }
+  class ResultadoAccion <<struct>> {
+    + terminada : bool
+    + jugadorEncontrado : bool
+    + duracion : double
+  }
+  class ModuloAprendizaje <<Aprendizaje>> {
+    - memoria : MemoriaAgente*
+    - eta : double
+    - factorOlvido : double
+    + registrar(i : const Interaccion&) : void
+    + probDistraccion() : double
+    + pesoZona(c : std::pair<int,int>) : double
+    + siguientePuntoPatrulla(r : const std::vector<Vector2D>&) : Vector2D
+    + olvidar(dt : double) : void
+  }
+  class MemoriaAgente <<compartida>> {
+    - mapaCalor : std::map<std::pair<int,int>, double>
+    - pDistraccion : double
+    - historial : std::deque<Interaccion>
+    - ultimaPosJugador : Vector2D
+    - {static} MAX_HISTORIAL : const int = 50
+  }
+  class Interaccion <<struct>> {
+    + estimulo : Estimulo
+    + decision : Decision
+    + resultado : ResultadoAccion
+  }
+}
+Enemigo <|-- Policia
+GestorJuego "1" o-- "1" MemoriaAgente : persiste entre intentos
+MapaCuadricula "1" *-- "*" Celda
+Celda --> TipoTile
+BusEventos "1" o-- "*" EventoRuido
+Enemigo --> "1" Jugador : objetivo
+Policia "1" *-- "1" AgenteInteligente
+AgenteInteligente "1" *-- "1" ModuloPercepcion : 1. percibir
+AgenteInteligente "1" *-- "1" ModuloRazonamiento : 2. razonar
+AgenteInteligente "1" *-- "1" ModuloAccion : 3. actuar
+AgenteInteligente "1" *-- "1" ModuloAprendizaje : 4. aprender
+ModuloPercepcion ..> Estimulo : produce
+ModuloPercepcion ..> BusEventos : escucha
+ModuloPercepcion --> MapaCuadricula : línea de visión
+ModuloRazonamiento ..> Decision : produce
+ModuloRazonamiento ..> ModuloAprendizaje : consulta pesos
+ModuloAccion ..> ResultadoAccion : produce
+ModuloAccion --> MapaCuadricula : buscarRuta()
+ModuloAprendizaje "*" o-- "1" MemoriaAgente : compartida por los guardias
+MemoriaAgente "1" *-- "0..50" Interaccion
+Interaccion *-- Estimulo
+Interaccion *-- Decision
+Interaccion *-- ResultadoAccion
+Estimulo --> TipoEstimulo
+Decision --> TipoAccion
+Decision --> Intencion
+AgenteInteligente --> EstadoAgente
+Jugador ..> EventoRuido : <<emite>>
+EventoRuido --> TipoRuido
+legend right
+  Ciclo por cuadro: percibir() → interpretar()/decidir() → ejecutar() → registrar()
+  |<#E3F2FD> | 1. Percepción |
+  |<#EDE7F6> | 2. Razonamiento |
+  |<#FFF3E0> | 3. Acción |
+  |<#E8F5E9> | 4. Aprendizaje |
+endlegend
+@enduml
