@@ -1,0 +1,80 @@
+@startuml flujo_agente_inteligente
+skinparam shadowing false
+skinparam defaultFontName "DejaVu Sans"
+skinparam defaultFontSize 13
+skinparam ArrowColor #333333
+skinparam activity {
+  BackgroundColor #FFFFFF
+  BorderColor #3A3A3A
+  DiamondBackgroundColor #FFFDE7
+}
+skinparam swimlane {
+  BorderColor #9E9E9E
+  TitleFontSize 15
+}
+title Lo que hace el policía guardia en cada instante del Nivel 1
+
+|#E3F2FD|1. Percibir|
+start
+repeat
+  :<b>Mirar</b>: ¿el jugador está delante,
+  cerca, con luz y sin paredes
+  ni pisos de por medio?;
+  :<b>Escuchar</b>: ¿algún ruido llegó
+  con suficiente fuerza?;
+  :<b>Avisos</b>: ¿otro guardia
+  dio la alarma?;
+  :Anotar lo que vio y oyó
+  (qué fue, dónde y qué tan seguro está);
+
+|#EDE7F6|2. Pensar|
+  :Subir o bajar la sospecha (de 0 a 100);
+  if (¿Vio al jugador?) then (sí)
+    if (¿Está muy cerca?) then (sí)
+      :Decidir: atraparlo;
+    else (no)
+      :Decidir: perseguirlo;
+    endif
+  elseif (¿Fue una piedra y ya aprendió
+que suelen ser trampas?) then (sí)
+    :Decidir: mirar hacia donde
+    probablemente la lanzaron;
+  elseif (¿La sospecha es alta?) then (sí)
+    :Decidir: ir a revisar el lugar;
+  else (no)
+    :Decidir: seguir la ronda;
+  endif
+  if (¿Sospecha mayor a 90 o lleva
+más de 3 s persiguiendo?) then (sí)
+    :Decidir también: dar la alarma;
+  endif
+
+|#FFF3E0|3. Actuar|
+  :Buscar el camino más corto
+  (solo por donde hay piso; puede usar escaleras);
+  :Caminar, voltearse y mostrar «?» o «!»
+  (lento en la ronda, normal al revisar,
+  rápido al perseguir);
+  if (¿Hay alarma?) then (sí)
+    :Avisar a los demás guardias;
+  endif
+  :Anotar cómo le fue
+  (¿terminó?, ¿encontró al jugador?);
+
+|#E8F5E9|4. Aprender|
+  :Guardar lo que pasó
+  (recuerda las últimas 50 situaciones);
+  if (¿Vio al jugador?) then (sí)
+    :Marcar ese lugar en el mapa de calor
+    (pasará más seguido por allí);
+  endif
+  if (¿Revisó el ruido de una piedra?) then (sí)
+    :Ajustar qué tanto desconfía de las piedras
+    (sube si no había nadie, baja si encontró al jugador);
+  endif
+  :Olvidar poco a poco lo más antiguo;
+repeat while (¿El nivel sigue?) is (sí) not (no)
+:Guardar la memoria para el siguiente intento
+(los guardias recuerdan si atrapan al jugador);
+stop
+@enduml
