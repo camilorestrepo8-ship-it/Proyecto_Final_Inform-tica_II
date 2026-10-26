@@ -1,0 +1,589 @@
+{
+ "nivel": "nivel2_calles",
+ "ancho": 6400,
+ "alto": 720,
+ "tam_tile": 40,
+ "tipos": {
+  "SOLIDO": "bloquea en todas las direcciones",
+  "PLATAFORMA": "unidireccional: se atraviesa desde abajo y se pisa desde arriba",
+  "ESCALERA": "zona para trepar (arriba/abajo)",
+  "ENCERADO": "sólido con fricción cinética baja (mu = 0,08)",
+  "AGUA": "caída: el jugador pierde un impacto y reaparece"
+ },
+ "colisiones": [
+  {
+   "x": -6,
+   "y": 238,
+   "w": 312,
+   "h": 14,
+   "tipo": "PLATAFORMA",
+   "etiqueta": "tejado"
+  },
+  {
+   "x": 6,
+   "y": 410,
+   "w": 288,
+   "h": 16,
+   "tipo": "PLATAFORMA",
+   "etiqueta": "balcón"
+  },
+  {
+   "x": 294,
+   "y": 298,
+   "w": 342,
+   "h": 14,
+   "tipo": "PLATAFORMA",
+   "etiqueta": "tejado"
+  },
+  {
+   "x": 624,
+   "y": 218,
+   "w": 332,
+   "h": 14,
+   "tipo": "PLATAFORMA",
+   "etiqueta": "tejado"
+  },
+  {
+   "x": 636,
+   "y": 410,
+   "w": 308,
+   "h": 16,
+   "tipo": "PLATAFORMA",
+   "etiqueta": "balcón"
+  },
+  {
+   "x": 944,
+   "y": 268,
+   "w": 342,
+   "h": 14,
+   "tipo": "PLATAFORMA",
+   "etiqueta": "tejado"
+  },
+  {
+   "x": 956,
+   "y": 410,
+   "w": 318,
+   "h": 16,
+   "tipo": "PLATAFORMA",
+   "etiqueta": "balcón"
+  },
+  {
+   "x": 0,
+   "y": 600,
+   "w": 1280,
+   "h": 120,
+   "tipo": "SOLIDO",
+   "etiqueta": "calle"
+  },
+  {
+   "x": 1274,
+   "y": 338,
+   "w": 262,
+   "h": 14,
+   "tipo": "PLATAFORMA",
+   "etiqueta": "tejado"
+  },
+  {
+   "x": 1604,
+   "y": 368,
+   "w": 242,
+   "h": 14,
+   "tipo": "PLATAFORMA",
+   "etiqueta": "tejado"
+  },
+  {
+   "x": 1994,
+   "y": 318,
+   "w": 252,
+   "h": 14,
+   "tipo": "PLATAFORMA",
+   "etiqueta": "tejado"
+  },
+  {
+   "x": 2314,
+   "y": 348,
+   "w": 252,
+   "h": 14,
+   "tipo": "PLATAFORMA",
+   "etiqueta": "tejado"
+  },
+  {
+   "x": 1280,
+   "y": 600,
+   "w": 580,
+   "h": 120,
+   "tipo": "SOLIDO",
+   "etiqueta": "calle"
+  },
+  {
+   "x": 1980,
+   "y": 600,
+   "w": 580,
+   "h": 120,
+   "tipo": "SOLIDO",
+   "etiqueta": "calle"
+  },
+  {
+   "x": 1860,
+   "y": 660,
+   "w": 120,
+   "h": 60,
+   "tipo": "AGUA",
+   "etiqueta": "caño"
+  },
+  {
+   "x": 1400,
+   "y": 440,
+   "w": 80,
+   "h": 160,
+   "tipo": "SOLIDO",
+   "etiqueta": "cajas x2"
+  },
+  {
+   "x": 1480,
+   "y": 520,
+   "w": 80,
+   "h": 80,
+   "tipo": "SOLIDO",
+   "etiqueta": "cajas x1"
+  },
+  {
+   "x": 2554,
+   "y": 288,
+   "w": 312,
+   "h": 14,
+   "tipo": "PLATAFORMA",
+   "etiqueta": "tejado"
+  },
+  {
+   "x": 2566,
+   "y": 410,
+   "w": 288,
+   "h": 16,
+   "tipo": "PLATAFORMA",
+   "etiqueta": "balcón"
+  },
+  {
+   "x": 3534,
+   "y": 278,
+   "w": 312,
+   "h": 14,
+   "tipo": "PLATAFORMA",
+   "etiqueta": "tejado"
+  },
+  {
+   "x": 3546,
+   "y": 410,
+   "w": 288,
+   "h": 16,
+   "tipo": "PLATAFORMA",
+   "etiqueta": "balcón"
+  },
+  {
+   "x": 2560,
+   "y": 600,
+   "w": 1280,
+   "h": 120,
+   "tipo": "SOLIDO",
+   "etiqueta": "calle"
+  },
+  {
+   "x": 2860,
+   "y": 560,
+   "w": 80,
+   "h": 40,
+   "tipo": "SOLIDO",
+   "etiqueta": "escalinata"
+  },
+  {
+   "x": 2940,
+   "y": 520,
+   "w": 80,
+   "h": 80,
+   "tipo": "SOLIDO",
+   "etiqueta": "escalinata"
+  },
+  {
+   "x": 3020,
+   "y": 480,
+   "w": 80,
+   "h": 120,
+   "tipo": "SOLIDO",
+   "etiqueta": "escalinata"
+  },
+  {
+   "x": 3100,
+   "y": 440,
+   "w": 220,
+   "h": 160,
+   "tipo": "SOLIDO",
+   "etiqueta": "atrio"
+  },
+  {
+   "x": 3320,
+   "y": 480,
+   "w": 80,
+   "h": 120,
+   "tipo": "SOLIDO",
+   "etiqueta": "escalinata"
+  },
+  {
+   "x": 3400,
+   "y": 520,
+   "w": 80,
+   "h": 80,
+   "tipo": "SOLIDO",
+   "etiqueta": "escalinata"
+  },
+  {
+   "x": 3480,
+   "y": 560,
+   "w": 80,
+   "h": 40,
+   "tipo": "SOLIDO",
+   "etiqueta": "escalinata"
+  },
+  {
+   "x": 3612,
+   "y": 540,
+   "w": 176,
+   "h": 60,
+   "tipo": "SOLIDO",
+   "etiqueta": "pila"
+  },
+  {
+   "x": 3834,
+   "y": 248,
+   "w": 432,
+   "h": 14,
+   "tipo": "PLATAFORMA",
+   "etiqueta": "tejado"
+  },
+  {
+   "x": 4254,
+   "y": 268,
+   "w": 372,
+   "h": 14,
+   "tipo": "PLATAFORMA",
+   "etiqueta": "tejado"
+  },
+  {
+   "x": 4266,
+   "y": 410,
+   "w": 348,
+   "h": 16,
+   "tipo": "PLATAFORMA",
+   "etiqueta": "balcón"
+  },
+  {
+   "x": 4614,
+   "y": 288,
+   "w": 512,
+   "h": 14,
+   "tipo": "PLATAFORMA",
+   "etiqueta": "tejado"
+  },
+  {
+   "x": 4626,
+   "y": 410,
+   "w": 488,
+   "h": 16,
+   "tipo": "PLATAFORMA",
+   "etiqueta": "balcón"
+  },
+  {
+   "x": 3880,
+   "y": 470,
+   "w": 380,
+   "h": 16,
+   "tipo": "PLATAFORMA",
+   "etiqueta": "andamio"
+  },
+  {
+   "x": 3940,
+   "y": 340,
+   "w": 320,
+   "h": 16,
+   "tipo": "PLATAFORMA",
+   "etiqueta": "andamio"
+  },
+  {
+   "x": 4220,
+   "y": 470,
+   "w": 40,
+   "h": 130,
+   "tipo": "ESCALERA",
+   "etiqueta": "escalera andamio"
+  },
+  {
+   "x": 3960,
+   "y": 340,
+   "w": 40,
+   "h": 130,
+   "tipo": "ESCALERA",
+   "etiqueta": "escalera andamio"
+  },
+  {
+   "x": 3840,
+   "y": 600,
+   "w": 640,
+   "h": 120,
+   "tipo": "SOLIDO",
+   "etiqueta": "calle"
+  },
+  {
+   "x": 4640,
+   "y": 600,
+   "w": 480,
+   "h": 120,
+   "tipo": "SOLIDO",
+   "etiqueta": "calle"
+  },
+  {
+   "x": 4480,
+   "y": 660,
+   "w": 160,
+   "h": 60,
+   "tipo": "AGUA",
+   "etiqueta": "zanja"
+  },
+  {
+   "x": 5114,
+   "y": 268,
+   "w": 352,
+   "h": 14,
+   "tipo": "PLATAFORMA",
+   "etiqueta": "tejado"
+  },
+  {
+   "x": 5126,
+   "y": 410,
+   "w": 328,
+   "h": 16,
+   "tipo": "PLATAFORMA",
+   "etiqueta": "balcón"
+  },
+  {
+   "x": 5454,
+   "y": 288,
+   "w": 332,
+   "h": 14,
+   "tipo": "PLATAFORMA",
+   "etiqueta": "tejado"
+  },
+  {
+   "x": 5774,
+   "y": 248,
+   "w": 352,
+   "h": 14,
+   "tipo": "PLATAFORMA",
+   "etiqueta": "tejado"
+  },
+  {
+   "x": 5786,
+   "y": 410,
+   "w": 328,
+   "h": 16,
+   "tipo": "PLATAFORMA",
+   "etiqueta": "balcón"
+  },
+  {
+   "x": 6114,
+   "y": 308,
+   "w": 292,
+   "h": 14,
+   "tipo": "PLATAFORMA",
+   "etiqueta": "tejado"
+  },
+  {
+   "x": 5120,
+   "y": 600,
+   "w": 1280,
+   "h": 120,
+   "tipo": "SOLIDO",
+   "etiqueta": "calle"
+  }
+ ],
+ "objetos": [
+  {
+   "tipo": "toldo",
+   "x": 410,
+   "y": 600,
+   "k": 1800,
+   "b": 40
+  },
+  {
+   "tipo": "barricada",
+   "x": 860,
+   "y": 600
+  },
+  {
+   "tipo": "soldado",
+   "x": 760,
+   "y": 410,
+   "accion": "disparar"
+  },
+  {
+   "tipo": "soldado",
+   "x": 1100,
+   "y": 600,
+   "accion": "lanzar_gas"
+  },
+  {
+   "tipo": "pasabocas",
+   "x": 170,
+   "y": 410
+  },
+  {
+   "tipo": "paraguas",
+   "x": 1680,
+   "y": 368
+  },
+  {
+   "tipo": "soldado",
+   "x": 2430,
+   "y": 348,
+   "accion": "lanzar_gas"
+  },
+  {
+   "tipo": "soldado",
+   "x": 2160,
+   "y": 600,
+   "accion": "disparar"
+  },
+  {
+   "tipo": "soldado",
+   "x": 3210,
+   "y": 440,
+   "accion": "disparar"
+  },
+  {
+   "tipo": "pasabocas",
+   "x": 3210,
+   "y": 300
+  },
+  {
+   "tipo": "barricada",
+   "x": 4900,
+   "y": 600
+  },
+  {
+   "tipo": "soldado",
+   "x": 5020,
+   "y": 600,
+   "accion": "disparar"
+  },
+  {
+   "tipo": "soldado",
+   "x": 4400,
+   "y": 410,
+   "accion": "lanzar_gas"
+  },
+  {
+   "tipo": "toldo",
+   "x": 5320,
+   "y": 600,
+   "k": 1800,
+   "b": 40
+  },
+  {
+   "tipo": "toldo",
+   "x": 5880,
+   "y": 600,
+   "k": 1800,
+   "b": 40
+  },
+  {
+   "tipo": "comandante",
+   "x": 5640,
+   "y": 600,
+   "fases": 3
+  },
+  {
+   "tipo": "carro_escape",
+   "x": 6260,
+   "y": 600
+  },
+  {
+   "tipo": "meta",
+   "x": 6110,
+   "y": 600
+  }
+ ],
+ "rutas_patrulla": [],
+ "zonas": [
+  {
+   "nombre": "meta_carro",
+   "x": 6130,
+   "y": 470,
+   "w": 260,
+   "h": 130,
+   "requiere": "espada"
+  }
+ ],
+ "tramos": [
+  {
+   "indice": 0,
+   "archivo": "tramo1_balcones",
+   "nombre": "Calle de los balcones",
+   "x": 0,
+   "w": 1280,
+   "colisiones": [
+    0,
+    8
+   ]
+  },
+  {
+   "indice": 1,
+   "archivo": "tramo2_cano_tejados",
+   "nombre": "El caño y los tejados",
+   "x": 1280,
+   "w": 1280,
+   "colisiones": [
+    8,
+    17
+   ]
+  },
+  {
+   "indice": 2,
+   "archivo": "tramo3_plazuela",
+   "nombre": "Plazuela de la iglesia",
+   "x": 2560,
+   "w": 1280,
+   "colisiones": [
+    17,
+    30
+   ]
+  },
+  {
+   "indice": 3,
+   "archivo": "tramo4_obra",
+   "nombre": "La obra",
+   "x": 3840,
+   "w": 1280,
+   "colisiones": [
+    30,
+    42
+   ]
+  },
+  {
+   "indice": 4,
+   "archivo": "tramo5_final",
+   "nombre": "Huida final (Comandante)",
+   "x": 5120,
+   "w": 1280,
+   "colisiones": [
+    42,
+    49
+   ]
+  }
+ ],
+ "calle_y": 600,
+ "camara": "scroll horizontal continuo; el jugador no puede retroceder más de media pantalla",
+ "parallax": {
+  "capa0_cielo": 0.1,
+  "capa1_montanas": 0.25,
+  "capa2_ciudad_lejana": 0.5,
+  "tramos": 1.0
+ }
+}

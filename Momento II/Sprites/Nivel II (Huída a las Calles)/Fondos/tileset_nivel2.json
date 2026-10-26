@@ -1,0 +1,104 @@
+{
+ "tam_tile": 40,
+ "columnas": 6,
+ "tiles": [
+  {
+   "id": 0,
+   "nombre": "anden_superior",
+   "tipo": "SOLIDO",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 1,
+   "nombre": "adoquin",
+   "tipo": "SOLIDO",
+   "x": 40,
+   "y": 0
+  },
+  {
+   "id": 2,
+   "nombre": "piedra_superior",
+   "tipo": "SOLIDO",
+   "x": 80,
+   "y": 0
+  },
+  {
+   "id": 3,
+   "nombre": "piedra",
+   "tipo": "SOLIDO",
+   "x": 120,
+   "y": 0
+  },
+  {
+   "id": 4,
+   "nombre": "tejado",
+   "tipo": "PLATAFORMA",
+   "x": 160,
+   "y": 0
+  },
+  {
+   "id": 5,
+   "nombre": "teja",
+   "tipo": "DECORADO",
+   "x": 200,
+   "y": 0
+  },
+  {
+   "id": 6,
+   "nombre": "balcon",
+   "tipo": "PLATAFORMA",
+   "x": 0,
+   "y": 40
+  },
+  {
+   "id": 7,
+   "nombre": "andamio",
+   "tipo": "PLATAFORMA",
+   "x": 40,
+   "y": 40
+  },
+  {
+   "id": 8,
+   "nombre": "escalera",
+   "tipo": "ESCALERA",
+   "x": 80,
+   "y": 40
+  },
+  {
+   "id": 9,
+   "nombre": "caja",
+   "tipo": "SOLIDO",
+   "x": 120,
+   "y": 40
+  },
+  {
+   "id": 10,
+   "nombre": "agua",
+   "tipo": "AGUA",
+   "x": 160,
+   "y": 40
+  },
+  {
+   "id": 11,
+   "nombre": "barro",
+   "tipo": "AGUA",
+   "x": 200,
+   "y": 40
+  },
+  {
+   "id": 12,
+   "nombre": "ladrillo",
+   "tipo": "SOLIDO",
+   "x": 0,
+   "y": 80
+  },
+  {
+   "id": 13,
+   "nombre": "muro",
+   "tipo": "DECORADO",
+   "x": 40,
+   "y": 80
+  }
+ ]
+}
