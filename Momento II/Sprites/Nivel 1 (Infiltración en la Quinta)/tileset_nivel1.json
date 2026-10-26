@@ -1,0 +1,132 @@
+{
+ "tam_tile": 40,
+ "columnas": 6,
+ "tiles": [
+  {
+   "id": 0,
+   "nombre": "pasto_superior",
+   "tipo": "SOLIDO",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 1,
+   "nombre": "tierra",
+   "tipo": "SOLIDO",
+   "x": 40,
+   "y": 0
+  },
+  {
+   "id": 2,
+   "nombre": "piedra_superior",
+   "tipo": "SOLIDO",
+   "x": 80,
+   "y": 0
+  },
+  {
+   "id": 3,
+   "nombre": "piedra",
+   "tipo": "SOLIDO",
+   "x": 120,
+   "y": 0
+  },
+  {
+   "id": 4,
+   "nombre": "muro",
+   "tipo": "SOLIDO",
+   "x": 160,
+   "y": 0
+  },
+  {
+   "id": 5,
+   "nombre": "ladrillo",
+   "tipo": "SOLIDO",
+   "x": 200,
+   "y": 0
+  },
+  {
+   "id": 6,
+   "nombre": "madera_superior",
+   "tipo": "SOLIDO",
+   "x": 0,
+   "y": 40
+  },
+  {
+   "id": 7,
+   "nombre": "madera",
+   "tipo": "SOLIDO",
+   "x": 40,
+   "y": 40
+  },
+  {
+   "id": 8,
+   "nombre": "encerado_superior",
+   "tipo": "ENCERADO",
+   "x": 80,
+   "y": 40
+  },
+  {
+   "id": 9,
+   "nombre": "encerado",
+   "tipo": "ENCERADO",
+   "x": 120,
+   "y": 40
+  },
+  {
+   "id": 10,
+   "nombre": "terracota_superior",
+   "tipo": "SOLIDO",
+   "x": 160,
+   "y": 40
+  },
+  {
+   "id": 11,
+   "nombre": "terracota",
+   "tipo": "SOLIDO",
+   "x": 200,
+   "y": 40
+  },
+  {
+   "id": 12,
+   "nombre": "techo_vigas",
+   "tipo": "SOLIDO",
+   "x": 0,
+   "y": 80
+  },
+  {
+   "id": 13,
+   "nombre": "viga",
+   "tipo": "PLATAFORMA",
+   "x": 40,
+   "y": 80
+  },
+  {
+   "id": 14,
+   "nombre": "escalera",
+   "tipo": "ESCALERA",
+   "x": 80,
+   "y": 80
+  },
+  {
+   "id": 15,
+   "nombre": "pared_damasco",
+   "tipo": "DECORADO",
+   "x": 120,
+   "y": 80
+  },
+  {
+   "id": 16,
+   "nombre": "pared_panel",
+   "tipo": "DECORADO",
+   "x": 160,
+   "y": 80
+  },
+  {
+   "id": 17,
+   "nombre": "pared_rayas",
+   "tipo": "DECORADO",
+   "x": 200,
+   "y": 80
+  }
+ ]
+}

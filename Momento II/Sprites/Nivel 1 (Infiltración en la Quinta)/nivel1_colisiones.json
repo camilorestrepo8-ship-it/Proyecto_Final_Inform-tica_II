@@ -1,0 +1,853 @@
+{
+ "nivel": "nivel1_quinta",
+ "ancho": 5120,
+ "alto": 1440,
+ "tam_tile": 40,
+ "tipos": {
+  "SOLIDO": "bloquea en todas las direcciones",
+  "PLATAFORMA": "unidireccional: se atraviesa desde abajo y se pisa desde arriba",
+  "ESCALERA": "zona para trepar (arriba/abajo)",
+  "ENCERADO": "sólido con fricción cinética baja (mu = 0,08)",
+  "AGUA": "caída: el jugador pierde un impacto y reaparece"
+ },
+ "colisiones": [
+  {
+   "x": 0,
+   "y": 1360,
+   "w": 1280,
+   "h": 80,
+   "tipo": "SOLIDO",
+   "etiqueta": "suelo jardín"
+  },
+  {
+   "x": 200,
+   "y": 1220,
+   "w": 162,
+   "h": 14,
+   "tipo": "PLATAFORMA",
+   "etiqueta": "rama"
+  },
+  {
+   "x": 438,
+   "y": 1080,
+   "w": 262,
+   "h": 14,
+   "tipo": "PLATAFORMA",
+   "etiqueta": "rama"
+  },
+  {
+   "x": 180,
+   "y": 940,
+   "w": 182,
+   "h": 14,
+   "tipo": "PLATAFORMA",
+   "etiqueta": "rama"
+  },
+  {
+   "x": 438,
+   "y": 800,
+   "w": 322,
+   "h": 14,
+   "tipo": "PLATAFORMA",
+   "etiqueta": "rama"
+  },
+  {
+   "x": 552,
+   "y": 1296,
+   "w": 236,
+   "h": 64,
+   "tipo": "SOLIDO",
+   "etiqueta": "fuente"
+  },
+  {
+   "x": 760,
+   "y": 1150,
+   "w": 152,
+   "h": 14,
+   "tipo": "PLATAFORMA",
+   "etiqueta": "rama"
+  },
+  {
+   "x": 960,
+   "y": 980,
+   "w": 140,
+   "h": 14,
+   "tipo": "PLATAFORMA",
+   "etiqueta": "rama"
+  },
+  {
+   "x": 760,
+   "y": 830,
+   "w": 152,
+   "h": 14,
+   "tipo": "PLATAFORMA",
+   "etiqueta": "rama"
+  },
+  {
+   "x": 1100,
+   "y": 1010,
+   "w": 110,
+   "h": 350,
+   "tipo": "SOLIDO",
+   "etiqueta": "torre reflector"
+  },
+  {
+   "x": 140,
+   "y": 640,
+   "w": 232,
+   "h": 14,
+   "tipo": "PLATAFORMA",
+   "etiqueta": "rama"
+  },
+  {
+   "x": 428,
+   "y": 520,
+   "w": 372,
+   "h": 14,
+   "tipo": "PLATAFORMA",
+   "etiqueta": "rama"
+  },
+  {
+   "x": 200,
+   "y": 400,
+   "w": 172,
+   "h": 14,
+   "tipo": "PLATAFORMA",
+   "etiqueta": "rama"
+  },
+  {
+   "x": 428,
+   "y": 270,
+   "w": 212,
+   "h": 14,
+   "tipo": "PLATAFORMA",
+   "etiqueta": "rama"
+  },
+  {
+   "x": 790,
+   "y": 690,
+   "w": 126,
+   "h": 14,
+   "tipo": "PLATAFORMA",
+   "etiqueta": "rama"
+  },
+  {
+   "x": 956,
+   "y": 600,
+   "w": 324,
+   "h": 14,
+   "tipo": "PLATAFORMA",
+   "etiqueta": "rama hacia la azotea"
+  },
+  {
+   "x": 1280,
+   "y": 640,
+   "w": 560,
+   "h": 80,
+   "tipo": "SOLIDO",
+   "etiqueta": "azotea"
+  },
+  {
+   "x": 1960,
+   "y": 640,
+   "w": 560,
+   "h": 80,
+   "tipo": "SOLIDO",
+   "etiqueta": "azotea"
+  },
+  {
+   "x": 2520,
+   "y": 640,
+   "w": 40,
+   "h": 80,
+   "tipo": "SOLIDO",
+   "etiqueta": "azotea"
+  },
+  {
+   "x": 1280,
+   "y": 600,
+   "w": 40,
+   "h": 40,
+   "tipo": "SOLIDO",
+   "etiqueta": "parapeto"
+  },
+  {
+   "x": 1440,
+   "y": 470,
+   "w": 280,
+   "h": 16,
+   "tipo": "PLATAFORMA",
+   "etiqueta": "pérgola"
+  },
+  {
+   "x": 2140,
+   "y": 440,
+   "w": 80,
+   "h": 200,
+   "tipo": "SOLIDO",
+   "etiqueta": "chimenea"
+  },
+  {
+   "x": 1576,
+   "y": 588,
+   "w": 52,
+   "h": 52,
+   "tipo": "SOLIDO",
+   "etiqueta": "maceta"
+  },
+  {
+   "x": 2036,
+   "y": 588,
+   "w": 52,
+   "h": 52,
+   "tipo": "SOLIDO",
+   "etiqueta": "maceta"
+  },
+  {
+   "x": 2520,
+   "y": 0,
+   "w": 40,
+   "h": 470,
+   "tipo": "SOLIDO",
+   "etiqueta": "muro exterior"
+  },
+  {
+   "x": 2560,
+   "y": 0,
+   "w": 1280,
+   "h": 40,
+   "tipo": "SOLIDO",
+   "etiqueta": "techo"
+  },
+  {
+   "x": 2560,
+   "y": 640,
+   "w": 1040,
+   "h": 80,
+   "tipo": "SOLIDO",
+   "etiqueta": "piso biblioteca"
+  },
+  {
+   "x": 3680,
+   "y": 640,
+   "w": 160,
+   "h": 80,
+   "tipo": "SOLIDO",
+   "etiqueta": "piso biblioteca"
+  },
+  {
+   "x": 3620,
+   "y": 560,
+   "w": 40,
+   "h": 800,
+   "tipo": "ESCALERA",
+   "etiqueta": "escalera biblioteca-comedor"
+  },
+  {
+   "x": 2560,
+   "y": 40,
+   "w": 40,
+   "h": 430,
+   "tipo": "SOLIDO",
+   "etiqueta": "muro (ventana a la azotea)"
+  },
+  {
+   "x": 3800,
+   "y": 40,
+   "w": 40,
+   "h": 430,
+   "tipo": "SOLIDO",
+   "etiqueta": "muro (puerta a la alcoba)"
+  },
+  {
+   "x": 2626,
+   "y": 400,
+   "w": 228,
+   "h": 12,
+   "tipo": "PLATAFORMA",
+   "etiqueta": "repisa estantería"
+  },
+  {
+   "x": 2626,
+   "y": 520,
+   "w": 228,
+   "h": 12,
+   "tipo": "PLATAFORMA",
+   "etiqueta": "repisa estantería"
+  },
+  {
+   "x": 2622,
+   "y": 280,
+   "w": 236,
+   "h": 14,
+   "tipo": "PLATAFORMA",
+   "etiqueta": "tope estantería"
+  },
+  {
+   "x": 2920,
+   "y": 584,
+   "w": 230,
+   "h": 16,
+   "tipo": "PLATAFORMA",
+   "etiqueta": "mesa"
+  },
+  {
+   "x": 3260,
+   "y": 360,
+   "w": 500,
+   "h": 16,
+   "tipo": "PLATAFORMA",
+   "etiqueta": "galería"
+  },
+  {
+   "x": 3320,
+   "y": 360,
+   "w": 40,
+   "h": 280,
+   "tipo": "ESCALERA",
+   "etiqueta": "escalera rodante"
+  },
+  {
+   "x": 3840,
+   "y": 0,
+   "w": 1280,
+   "h": 40,
+   "tipo": "SOLIDO",
+   "etiqueta": "techo"
+  },
+  {
+   "x": 3840,
+   "y": 640,
+   "w": 1280,
+   "h": 80,
+   "tipo": "SOLIDO",
+   "etiqueta": "piso alcoba"
+  },
+  {
+   "x": 3840,
+   "y": 40,
+   "w": 40,
+   "h": 430,
+   "tipo": "SOLIDO",
+   "etiqueta": "muro (puerta a la biblioteca)"
+  },
+  {
+   "x": 5080,
+   "y": 40,
+   "w": 40,
+   "h": 600,
+   "tipo": "SOLIDO",
+   "etiqueta": "muro exterior"
+  },
+  {
+   "x": 3950,
+   "y": 574,
+   "w": 300,
+   "h": 14,
+   "tipo": "PLATAFORMA",
+   "etiqueta": "cama"
+  },
+  {
+   "x": 4270,
+   "y": 592,
+   "w": 80,
+   "h": 12,
+   "tipo": "PLATAFORMA",
+   "etiqueta": "mueble"
+  },
+  {
+   "x": 4620,
+   "y": 584,
+   "w": 220,
+   "h": 16,
+   "tipo": "PLATAFORMA",
+   "etiqueta": "mesa"
+  },
+  {
+   "x": 4660,
+   "y": 440,
+   "w": 240,
+   "h": 16,
+   "tipo": "PLATAFORMA",
+   "etiqueta": "repisa alcoba"
+  },
+  {
+   "x": 1280,
+   "y": 720,
+   "w": 560,
+   "h": 40,
+   "tipo": "SOLIDO",
+   "etiqueta": "techo"
+  },
+  {
+   "x": 1960,
+   "y": 720,
+   "w": 600,
+   "h": 40,
+   "tipo": "SOLIDO",
+   "etiqueta": "techo"
+  },
+  {
+   "x": 1280,
+   "y": 1360,
+   "w": 120,
+   "h": 80,
+   "tipo": "SOLIDO",
+   "etiqueta": "piso corredor"
+  },
+  {
+   "x": 1400,
+   "y": 1360,
+   "w": 1040,
+   "h": 80,
+   "tipo": "ENCERADO",
+   "etiqueta": "piso encerado"
+  },
+  {
+   "x": 2440,
+   "y": 1360,
+   "w": 120,
+   "h": 80,
+   "tipo": "SOLIDO",
+   "etiqueta": "piso corredor"
+  },
+  {
+   "x": 1280,
+   "y": 760,
+   "w": 40,
+   "h": 430,
+   "tipo": "SOLIDO",
+   "etiqueta": "muro exterior (puerta principal)"
+  },
+  {
+   "x": 2520,
+   "y": 760,
+   "w": 40,
+   "h": 420,
+   "tipo": "SOLIDO",
+   "etiqueta": "muro (arco al comedor)"
+  },
+  {
+   "x": 1580,
+   "y": 1312,
+   "w": 170,
+   "h": 12,
+   "tipo": "PLATAFORMA",
+   "etiqueta": "banca"
+  },
+  {
+   "x": 2256,
+   "y": 1294,
+   "w": 52,
+   "h": 66,
+   "tipo": "SOLIDO",
+   "etiqueta": "maceta"
+  },
+  {
+   "x": 2560,
+   "y": 720,
+   "w": 1040,
+   "h": 40,
+   "tipo": "SOLIDO",
+   "etiqueta": "techo"
+  },
+  {
+   "x": 3680,
+   "y": 720,
+   "w": 160,
+   "h": 40,
+   "tipo": "SOLIDO",
+   "etiqueta": "techo"
+  },
+  {
+   "x": 2560,
+   "y": 1360,
+   "w": 1280,
+   "h": 80,
+   "tipo": "SOLIDO",
+   "etiqueta": "piso comedor"
+  },
+  {
+   "x": 2640,
+   "y": 1210,
+   "w": 250,
+   "h": 16,
+   "tipo": "PLATAFORMA",
+   "etiqueta": "repisa chimenea"
+  },
+  {
+   "x": 2904,
+   "y": 1286,
+   "w": 212,
+   "h": 12,
+   "tipo": "PLATAFORMA",
+   "etiqueta": "aparador"
+  },
+  {
+   "x": 3180,
+   "y": 1304,
+   "w": 330,
+   "h": 16,
+   "tipo": "PLATAFORMA",
+   "etiqueta": "mesa"
+  },
+  {
+   "x": 3800,
+   "y": 760,
+   "w": 40,
+   "h": 430,
+   "tipo": "SOLIDO",
+   "etiqueta": "muro (puerta a la sala)"
+  },
+  {
+   "x": 3800,
+   "y": 1190,
+   "w": 40,
+   "h": 170,
+   "tipo": "SOLIDO",
+   "etiqueta": "puerta con llave"
+  },
+  {
+   "x": 3840,
+   "y": 720,
+   "w": 1280,
+   "h": 40,
+   "tipo": "SOLIDO",
+   "etiqueta": "techo"
+  },
+  {
+   "x": 3840,
+   "y": 1360,
+   "w": 1280,
+   "h": 80,
+   "tipo": "SOLIDO",
+   "etiqueta": "piso sala"
+  },
+  {
+   "x": 3840,
+   "y": 760,
+   "w": 40,
+   "h": 430,
+   "tipo": "SOLIDO",
+   "etiqueta": "muro (detrás de la puerta con llave)"
+  },
+  {
+   "x": 5080,
+   "y": 760,
+   "w": 40,
+   "h": 600,
+   "tipo": "SOLIDO",
+   "etiqueta": "muro exterior"
+  },
+  {
+   "x": 4002,
+   "y": 1307,
+   "w": 94,
+   "h": 11,
+   "tipo": "PLATAFORMA",
+   "etiqueta": "sillón"
+  },
+  {
+   "x": 4822,
+   "y": 1307,
+   "w": 94,
+   "h": 11,
+   "tipo": "PLATAFORMA",
+   "etiqueta": "sillón"
+  },
+  {
+   "x": 4904,
+   "y": 1182,
+   "w": 162,
+   "h": 14,
+   "tipo": "PLATAFORMA",
+   "etiqueta": "bufete"
+  },
+  {
+   "x": 4600,
+   "y": 1040,
+   "w": 440,
+   "h": 16,
+   "tipo": "PLATAFORMA",
+   "etiqueta": "viga alta"
+  }
+ ],
+ "objetos": [
+  {
+   "tipo": "spawn_jugador",
+   "x": 260,
+   "y": 1360
+  },
+  {
+   "tipo": "reflector",
+   "x": 1155,
+   "y": 958,
+   "pivote": [
+    40,
+    40
+   ],
+   "omega0": 0.6,
+   "alfa_alarma": 0.4
+  },
+  {
+   "tipo": "piedra",
+   "x": 820,
+   "y": 1360
+  },
+  {
+   "tipo": "capa_aluminio",
+   "x": 2310,
+   "y": 640
+  },
+  {
+   "tipo": "piedra",
+   "x": 1760,
+   "y": 640
+  },
+  {
+   "tipo": "candelabro",
+   "x": 2990,
+   "y": 40,
+   "longitud": 160,
+   "theta0_grados": 8
+  },
+  {
+   "tipo": "pasabocas",
+   "x": 3660,
+   "y": 360
+  },
+  {
+   "tipo": "piedra",
+   "x": 2860,
+   "y": 640
+  },
+  {
+   "tipo": "armario",
+   "x": 4460,
+   "y": 640,
+   "escondite": true
+  },
+  {
+   "tipo": "llave",
+   "x": 4730,
+   "y": 584
+  },
+  {
+   "tipo": "armario",
+   "x": 2100,
+   "y": 1360,
+   "escondite": true
+  },
+  {
+   "tipo": "puerta_con_llave",
+   "x": 3800,
+   "y": 1190,
+   "requiere": "llave"
+  },
+  {
+   "tipo": "candelabro",
+   "x": 3350,
+   "y": 760,
+   "longitud": 200,
+   "theta0_grados": 6
+  },
+  {
+   "tipo": "pasabocas",
+   "x": 3010,
+   "y": 1286
+  },
+  {
+   "tipo": "vitrina",
+   "x": 4480,
+   "y": 1360,
+   "golpes_butters": 3,
+   "golpes_cartman_fortachon": 1
+  },
+  {
+   "tipo": "candelabro",
+   "x": 4480,
+   "y": 760,
+   "longitud": 150,
+   "theta0_grados": 5
+  }
+ ],
+ "rutas_patrulla": [
+  {
+   "nombre": "guardia_1_jardin",
+   "puntos": [
+    [
+     250,
+     1360
+    ],
+    [
+     1080,
+     1360
+    ]
+   ],
+   "sala": [
+    1,
+    0
+   ]
+  },
+  {
+   "nombre": "guardia_3_biblioteca",
+   "puntos": [
+    [
+     2660,
+     640
+    ],
+    [
+     3560,
+     640
+    ]
+   ],
+   "sala": [
+    0,
+    2
+   ]
+  },
+  {
+   "nombre": "guardia_2_corredor",
+   "puntos": [
+    [
+     1420,
+     1360
+    ],
+    [
+     2460,
+     1360
+    ]
+   ],
+   "sala": [
+    1,
+    1
+   ]
+  },
+  {
+   "nombre": "guardia_4_sala",
+   "puntos": [
+    [
+     3960,
+     1360
+    ],
+    [
+     5020,
+     1360
+    ]
+   ],
+   "sala": [
+    1,
+    3
+   ]
+  }
+ ],
+ "zonas": [
+  {
+   "nombre": "salida_porton",
+   "x": 40,
+   "y": 1160,
+   "w": 140,
+   "h": 200,
+   "requiere": "espada"
+  },
+  {
+   "nombre": "claraboya",
+   "x": 1840,
+   "y": 600,
+   "w": 120,
+   "h": 120,
+   "conduce_a": "corredor"
+  },
+  {
+   "nombre": "escotilla",
+   "x": 3600,
+   "y": 600,
+   "w": 80,
+   "h": 120,
+   "conduce_a": "comedor"
+  },
+  {
+   "nombre": "puerta_principal",
+   "x": 1280,
+   "y": 1190,
+   "w": 40,
+   "h": 170,
+   "conduce_a": "jardín"
+  }
+ ],
+ "salas": [
+  {
+   "fila": 0,
+   "col": 0,
+   "nombre": "Copas de los árboles",
+   "x": 0,
+   "y": 0,
+   "w": 1280,
+   "h": 720
+  },
+  {
+   "fila": 0,
+   "col": 1,
+   "nombre": "Azotea",
+   "x": 1280,
+   "y": 0,
+   "w": 1280,
+   "h": 720
+  },
+  {
+   "fila": 0,
+   "col": 2,
+   "nombre": "Biblioteca",
+   "x": 2560,
+   "y": 0,
+   "w": 1280,
+   "h": 720
+  },
+  {
+   "fila": 0,
+   "col": 3,
+   "nombre": "Alcoba",
+   "x": 3840,
+   "y": 0,
+   "w": 1280,
+   "h": 720
+  },
+  {
+   "fila": 1,
+   "col": 0,
+   "nombre": "Jardín y portón",
+   "x": 0,
+   "y": 720,
+   "w": 1280,
+   "h": 720
+  },
+  {
+   "fila": 1,
+   "col": 1,
+   "nombre": "Corredor encerado",
+   "x": 1280,
+   "y": 720,
+   "w": 1280,
+   "h": 720
+  },
+  {
+   "fila": 1,
+   "col": 2,
+   "nombre": "Comedor",
+   "x": 2560,
+   "y": 720,
+   "w": 1280,
+   "h": 720
+  },
+  {
+   "fila": 1,
+   "col": 3,
+   "nombre": "Sala de la espada",
+   "x": 3840,
+   "y": 720,
+   "w": 1280,
+   "h": 720
+  }
+ ],
+ "camara": "fija por sala; cambia al cruzar el borde"
+}
