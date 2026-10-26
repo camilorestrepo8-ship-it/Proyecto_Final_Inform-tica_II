@@ -1,0 +1,44 @@
+{
+  "personaje": "policia_lateral",
+  "frame_width": 128,
+  "frame_height": 128,
+  "columnas": 6,
+  "orientacion": "derecha",
+  "animaciones": {
+    "idle": {
+      "fila": 0,
+      "frames": 4,
+      "fps": 6
+    },
+    "walk": {
+      "fila": 1,
+      "frames": 6,
+      "fps": 10
+    },
+    "run": {
+      "fila": 2,
+      "frames": 6,
+      "fps": 14
+    },
+    "ataque": {
+      "fila": 3,
+      "frames": 4,
+      "fps": 12
+    },
+    "alerta": {
+      "fila": 4,
+      "frames": 3,
+      "fps": 6
+    },
+    "herido": {
+      "fila": 5,
+      "frames": 3,
+      "fps": 8
+    },
+    "muerte": {
+      "fila": 6,
+      "frames": 5,
+      "fps": 8
+    }
+  }
+}
